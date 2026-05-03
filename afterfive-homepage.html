@@ -1,0 +1,3158 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The After Five Club — Meaningful Learning & Social Experience</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    /* ── TOKENS ── */
+    :root {
+      --red: #C0272D;
+      --red-dark: #8B1A1E;
+      --red-light: #E8454B;
+      --black: #111111;
+      --off-black: #1E1E1E;
+      --cream: #F8F4EF;
+      --warm-gray: #E8E2DA;
+      --mid-gray: #9A9088;
+      --white: #FFFFFF;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body: 'DM Sans', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+      --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      --shadow-card: 0 4px 32px rgba(0, 0, 0, 0.10);
+      --shadow-modal: 0 24px 80px rgba(0, 0, 0, 0.35);
+    }
+
+    /* ── RESET ── */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--cream);
+      color: var(--black);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--cream);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--red);
+      border-radius: 3px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 68px;
+      background: rgba(248, 244, 239, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(192, 39, 45, 0.12);
+      transition: all var(--transition);
+    }
+
+    nav.scrolled {
+      background: rgba(17, 17, 17, 0.97);
+      border-bottom-color: rgba(192, 39, 45, 0.4);
+    }
+
+    nav.scrolled .nav-logo {
+      color: var(--white);
+    }
+
+    nav.scrolled .nav-logo span {
+      color: var(--red-light);
+    }
+
+    nav.scrolled .nav-links a {
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    nav.scrolled .nav-links a:hover {
+      color: var(--white);
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--black);
+      letter-spacing: -0.5px;
+    }
+
+    .nav-logo span {
+      color: var(--red);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--off-black);
+      letter-spacing: 0.5px;
+      transition: color var(--transition);
+      text-transform: uppercase;
+    }
+
+    .nav-links a:hover {
+      color: var(--red);
+    }
+
+    .nav-cta {
+      background: var(--red) !important;
+      color: var(--white) !important;
+      padding: 9px 20px !important;
+      border-radius: 2px;
+      font-weight: 600 !important;
+      letter-spacing: 0.3px !important;
+      transition: background var(--transition) !important;
+    }
+
+    .nav-cta:hover {
+      background: var(--red-dark) !important;
+    }
+
+    .nav-hamburger {
+      display: none;
+      cursor: pointer;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .nav-hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--black);
+      border-radius: 1px;
+      transition: all var(--transition);
+    }
+
+    nav.scrolled .nav-hamburger span {
+      background: var(--white);
+    }
+
+    .nav-mobile {
+      display: none;
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      background: var(--black);
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+      padding-top: 68px;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 40%, rgba(192, 39, 45, 0.25) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 70% at 20% 80%, rgba(139, 26, 30, 0.2) 0%, transparent 50%),
+        linear-gradient(160deg, #111 0%, #1a0808 50%, #0d0d0d 100%);
+    }
+
+    .hero-grain {
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .hero-accent {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 55%;
+      height: 100%;
+      clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+      overflow: hidden;
+    }
+
+    .hero-accent-img {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(192, 39, 45, 0.15) 0%, rgba(30, 10, 10, 0.5) 100%);
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 3px;
+      opacity: 0.55;
+    }
+
+    .hero-img-block {
+      background: var(--red-dark);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-img-block:nth-child(1) {
+      background: linear-gradient(145deg, #8B1A1E, #4A0E10);
+    }
+
+    .hero-img-block:nth-child(2) {
+      background: linear-gradient(145deg, #3D0D0F, #6B1518);
+    }
+
+    .hero-img-block:nth-child(3) {
+      background: linear-gradient(145deg, #5C1215, #2A0809);
+    }
+
+    .hero-img-block:nth-child(4) {
+      background: linear-gradient(145deg, #4A0E10, #8B1A1E);
+      grid-column: span 2;
+    }
+
+    .hero-img-block:nth-child(5) {
+      background: linear-gradient(145deg, #6B1518, #3D0D0F);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 80px 60px;
+      max-width: 680px;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(192, 39, 45, 0.15);
+      border: 1px solid rgba(192, 39, 45, 0.35);
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 28px;
+    }
+
+    .hero-eyebrow-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--red-light);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.5;
+        transform: scale(0.8);
+      }
+    }
+
+    .hero-eyebrow span {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.75);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(52px, 7vw, 96px);
+      font-weight: 900;
+      line-height: 0.92;
+      color: var(--white);
+      letter-spacing: -3px;
+      margin-bottom: 28px;
+    }
+
+    .hero-title em {
+      color: var(--red-light);
+      font-style: italic;
+    }
+
+    .hero-subtitle {
+      font-size: 17px;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.62);
+      max-width: 480px;
+      margin-bottom: 48px;
+      font-weight: 300;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--red);
+      color: var(--white);
+      padding: 14px 28px;
+      border-radius: 2px;
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 0.3px;
+      transition: all var(--transition);
+      border: 2px solid transparent;
+    }
+
+    .btn-primary:hover {
+      background: var(--red-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(192, 39, 45, 0.4);
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.8);
+      padding: 14px 28px;
+      border-radius: 2px;
+      font-weight: 500;
+      font-size: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all var(--transition);
+    }
+
+    .btn-ghost:hover {
+      border-color: rgba(255, 255, 255, 0.6);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    .hero-stats {
+      position: absolute;
+      bottom: 48px;
+      right: 60px;
+      display: flex;
+      gap: 40px;
+      z-index: 2;
+    }
+
+    .hero-stat-item {
+      text-align: right;
+    }
+
+    .hero-stat-number {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .hero-stat-label {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.45);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 48px;
+      left: 60px;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hero-scroll-line {
+      width: 48px;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .hero-scroll-text {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.4);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+    }
+
+    /* ── SECTION COMMONS ── */
+    section {
+      position: relative;
+    }
+
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .section-header {
+      margin-bottom: 64px;
+    }
+
+    .section-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 16px;
+    }
+
+    .section-badge::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--red);
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(34px, 4.5vw, 58px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -1.5px;
+      color: var(--black);
+    }
+
+    .section-title.light {
+      color: var(--white);
+    }
+
+    .section-desc {
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--mid-gray);
+      max-width: 560px;
+      margin-top: 16px;
+    }
+
+    .section-desc.light {
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      padding: 120px 0;
+      background: var(--cream);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .about-left .section-title {
+      font-size: clamp(32px, 4vw, 52px);
+    }
+
+    .about-text {
+      font-size: 16px;
+      line-height: 1.85;
+      color: #555;
+      margin-top: 24px;
+    }
+
+    .about-pillars {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 40px;
+    }
+
+    .pillar-card {
+      background: var(--white);
+      border: 1px solid var(--warm-gray);
+      border-radius: 4px;
+      padding: 20px;
+      transition: all var(--transition);
+    }
+
+    .pillar-card:hover {
+      border-color: var(--red);
+      box-shadow: 0 4px 20px rgba(192, 39, 45, 0.08);
+      transform: translateY(-3px);
+    }
+
+    .pillar-icon {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .pillar-title {
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    .pillar-desc {
+      font-size: 13px;
+      color: var(--mid-gray);
+      line-height: 1.6;
+    }
+
+    .about-right {
+      position: relative;
+    }
+
+    .about-visual {
+      background: var(--black);
+      border-radius: 8px;
+      overflow: hidden;
+      aspect-ratio: 4/5;
+      position: relative;
+      box-shadow: 24px 24px 0 var(--red);
+    }
+
+    .about-visual-inner {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(145deg, #1a0808 0%, #2d0f10 40%, #8B1A1E 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      padding: 40px;
+    }
+
+    .about-visual-logo {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 900;
+      color: white;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    .about-visual-logo span {
+      color: var(--red-light);
+    }
+
+    .about-quote {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-style: italic;
+      color: rgba(255, 255, 255, 0.7);
+      text-align: center;
+      line-height: 1.5;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      padding-top: 20px;
+    }
+
+    .about-visual-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+    }
+
+    .about-tag {
+      background: rgba(192, 39, 45, 0.2);
+      border: 1px solid rgba(192, 39, 45, 0.3);
+      color: var(--red-light);
+      padding: 5px 12px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .about-badge {
+      position: absolute;
+      bottom: -24px;
+      left: -24px;
+      background: var(--red);
+      color: white;
+      padding: 20px;
+      border-radius: 4px;
+      text-align: center;
+      box-shadow: 0 8px 24px rgba(192, 39, 45, 0.4);
+    }
+
+    .about-badge-num {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .about-badge-label {
+      font-size: 11px;
+      opacity: 0.85;
+      margin-top: 4px;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── SIGNATURE EVENTS ── */
+    #events {
+      padding: 120px 0;
+      background: var(--black);
+    }
+
+    .events-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 56px;
+    }
+
+    .events-scroll-wrapper {
+      width: 100%;
+    }
+
+    .events-track {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      padding-bottom: 8px;
+    }
+
+    .event-card {
+      background: var(--off-black);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 6px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all var(--transition);
+      position: relative;
+    }
+
+    .event-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(192, 39, 45, 0.4);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+    }
+
+    .event-card-img {
+      height: 220px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .event-card-img-inner {
+      width: 100%;
+      height: 100%;
+      transition: transform 0.5s ease;
+    }
+
+    .event-card:hover .event-card-img-inner {
+      transform: scale(1.05);
+    }
+
+    .event-card-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: var(--red);
+      color: white;
+      padding: 5px 12px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .event-card-body {
+      padding: 24px;
+    }
+
+    .event-card-category {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--red-light);
+      margin-bottom: 10px;
+    }
+
+    .event-card-title {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.25;
+      margin-bottom: 12px;
+    }
+
+    .event-card-desc {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.45);
+      line-height: 1.65;
+      margin-bottom: 20px;
+    }
+
+    .event-card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
+      padding-top: 16px;
+    }
+
+    .event-card-count {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+    .event-card-arrow {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid rgba(192, 39, 45, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--red-light);
+      font-size: 16px;
+      transition: all var(--transition);
+    }
+
+    .event-card:hover .event-card-arrow {
+      background: var(--red);
+      border-color: var(--red);
+      color: white;
+    }
+
+    /* event colors */
+    .event-bg-1 {
+      background: linear-gradient(135deg, #4A0E10 0%, #8B1A1E 40%, #C0272D 100%);
+    }
+
+    .event-bg-2 {
+      background: linear-gradient(135deg, #0D1A2D 0%, #1E3A5F 50%, #2D5A8E 100%);
+    }
+
+    .event-bg-3 {
+      background: linear-gradient(135deg, #0D2210 0%, #1A3D1C 50%, #2D6B30 100%);
+    }
+
+    .event-bg-4 {
+      background: linear-gradient(135deg, #2D1A00 0%, #5C3600 50%, #8B5200 100%);
+    }
+
+    .event-label-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .event-label-overlay .el-icon {
+      font-size: 42px;
+      margin-bottom: 12px;
+    }
+
+    .event-label-overlay .el-title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.9);
+      text-align: center;
+    }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-overlay.visible {
+      opacity: 1;
+    }
+
+    .modal-box {
+      background: var(--cream);
+      border-radius: 8px;
+      max-width: 860px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      transform: translateY(40px);
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      scrollbar-width: thin;
+      scrollbar-color: var(--red) var(--warm-gray);
+    }
+
+    .modal-overlay.visible .modal-box {
+      transform: translateY(0);
+    }
+
+    .modal-close {
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: flex-end;
+      padding: 16px 20px;
+      background: var(--cream);
+      z-index: 10;
+      border-bottom: 1px solid var(--warm-gray);
+    }
+
+    .modal-close-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--warm-gray);
+      border: none;
+      cursor: pointer;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--transition);
+      color: var(--black);
+    }
+
+    .modal-close-btn:hover {
+      background: var(--red);
+      color: white;
+    }
+
+    .modal-hero {
+      height: 260px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .modal-hero-bg {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    .modal-hero-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 12px;
+    }
+
+    .modal-hero-title {
+      font-family: var(--font-display);
+      font-size: 38px;
+      font-weight: 800;
+      color: white;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    .modal-body {
+      padding: 40px;
+    }
+
+    .modal-section-title {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--warm-gray);
+    }
+
+    .modal-desc {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #555;
+      margin-bottom: 32px;
+    }
+
+    .modal-photos {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+
+    .modal-photo {
+      aspect-ratio: 4/3;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .modal-photo-img {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+    }
+
+    .modal-testimonials {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .testimonial-card {
+      background: var(--white);
+      border-left: 3px solid var(--red);
+      padding: 20px 24px;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .testimonial-text {
+      font-size: 14px;
+      line-height: 1.75;
+      color: #444;
+      font-style: italic;
+      margin-bottom: 12px;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .testimonial-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .testimonial-name {
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .testimonial-role {
+      font-size: 12px;
+      color: var(--mid-gray);
+    }
+
+    .modal-cta {
+      text-align: center;
+      padding: 24px 0 0;
+    }
+
+    /* ── UPCOMING EVENTS ── */
+    #upcoming {
+      padding: 120px 0;
+      background: var(--white);
+    }
+
+    .upcoming-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 28px;
+    }
+
+    .upcoming-card {
+      border: 1px solid var(--warm-gray);
+      border-radius: 6px;
+      overflow: hidden;
+      transition: all var(--transition);
+      background: var(--white);
+    }
+
+    .upcoming-card:hover {
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+      transform: translateY(-4px);
+      border-color: rgba(192, 39, 45, 0.3);
+    }
+
+    .upcoming-img {
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 52px;
+      position: relative;
+    }
+
+    .upcoming-date-badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: var(--black);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 2px;
+      font-size: 12px;
+      font-weight: 600;
+      font-family: var(--font-mono);
+    }
+
+    .upcoming-body {
+      padding: 24px;
+    }
+
+    .upcoming-cat {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 8px;
+    }
+
+    .upcoming-title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 10px;
+    }
+
+    .upcoming-detail {
+      font-size: 13px;
+      color: var(--mid-gray);
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .upcoming-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--warm-gray);
+      padding-top: 16px;
+    }
+
+    .upcoming-price {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--red);
+    }
+
+    .upcoming-price span {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: var(--mid-gray);
+      text-decoration: line-through;
+      display: block;
+      font-weight: 400;
+    }
+
+    .btn-red-small {
+      background: var(--red);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 2px;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all var(--transition);
+      display: inline-block;
+    }
+
+    .btn-red-small:hover {
+      background: var(--red-dark);
+      transform: translateY(-1px);
+    }
+
+    /* ── PRODUCT ── */
+    #product {
+      padding: 120px 0;
+      background: var(--black);
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+
+    /* Visual side */
+    .product-visual {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .product-cards-scene {
+      position: relative;
+      width: 100%;
+      max-width: 380px;
+      aspect-ratio: 3/2;
+    }
+
+    /* Kraft box — bottom layer */
+    .product-box {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 52%;
+      aspect-ratio: 5/4;
+      background: linear-gradient(145deg, #c8a96e, #a07840);
+      border-radius: 10px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .product-box-inner {
+      text-align: center;
+      font-family: var(--font-display);
+      font-size: 11px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.85);
+      letter-spacing: 0.5px;
+      line-height: 1.4;
+      text-transform: uppercase;
+    }
+
+    .product-box-inner .brand-red {
+      color: #ff8a8a;
+      font-size: 13px;
+    }
+
+    /* Card stack — front layer */
+    .product-card-stack {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 58%;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .product-card-item {
+      width: 100%;
+      aspect-ratio: 8/5;
+      border-radius: 8px;
+      background: #1a1a2e;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 16px 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-card-item:first-child {
+      background: linear-gradient(145deg, #12122a, #1e1e42);
+      transform: rotate(-4deg) translateY(6px);
+      z-index: 1;
+    }
+
+    .product-card-item:last-child {
+      background: linear-gradient(145deg, #1a1022, #2e1a40);
+      transform: rotate(2deg) translateY(-6px);
+      z-index: 2;
+      margin-top: -30%;
+    }
+
+    .product-card-logo {
+      font-family: var(--font-display);
+      font-size: 9px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.4);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .product-card-logo span {
+      color: var(--red-light);
+    }
+
+    .product-card-question {
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.35;
+    }
+
+    /* Price pill — below the scene */
+    .product-price-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 100px;
+      padding: 10px 20px;
+      width: fit-content;
+    }
+
+    .product-price-now {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--red-light);
+      line-height: 1;
+    }
+
+    .product-price-divider {
+      width: 1px;
+      height: 28px;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .product-price-old {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.35);
+      text-decoration: line-through;
+    }
+
+    .product-price-badge {
+      background: var(--red);
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 100px;
+    }
+
+    /* Info side */
+    .product-info {}
+
+    .product-name {
+      font-family: var(--font-display);
+      font-size: clamp(34px, 3.5vw, 50px);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.05;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+
+    .product-name em {
+      color: var(--red-light);
+      font-style: italic;
+    }
+
+    .product-desc {
+      font-size: 15px;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 32px;
+    }
+
+    .product-features {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+
+    .product-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .product-feature-icon {
+      width: 22px;
+      height: 22px;
+      background: rgba(192, 39, 45, 0.15);
+      border: 1px solid rgba(192, 39, 45, 0.35);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: var(--red-light);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .product-feature-text {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.55;
+    }
+
+    @media (max-width: 900px) {
+      .product-grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .product-visual {
+        max-width: 380px;
+        margin: 0 auto;
+        width: 100%;
+      }
+    }
+
+    /* ── GALLERY ── */
+    #gallery {
+      padding: 80px 0;
+      background: var(--cream);
+      overflow: hidden;
+    }
+
+    .gallery-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .gallery-header .section-desc {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .gallery-strip-wrapper {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gallery-strip-wrapper::before,
+    .gallery-strip-wrapper::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .gallery-strip-wrapper::before {
+      left: 0;
+      background: linear-gradient(to right, var(--cream), transparent);
+    }
+
+    .gallery-strip-wrapper::after {
+      right: 0;
+      background: linear-gradient(to left, var(--cream), transparent);
+    }
+
+    .gallery-strip {
+      display: flex;
+      gap: 16px;
+      animation: galleryScroll 35s linear infinite;
+      width: max-content;
+    }
+
+    .gallery-strip:hover {
+      animation-play-state: paused;
+    }
+
+    @keyframes galleryScroll {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    .gallery-item {
+      flex: 0 0 280px;
+      height: 200px;
+      border-radius: 6px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .gallery-item:hover .gallery-overlay {
+      opacity: 1;
+    }
+
+    .gallery-item-bg {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      transition: transform 0.4s ease;
+    }
+
+    .gallery-item:hover .gallery-item-bg {
+      transform: scale(1.08);
+    }
+
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(192, 39, 45, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .gallery-overlay-icon {
+      color: white;
+      font-size: 28px;
+    }
+
+    /* gallery bg colors */
+    .g1 {
+      background: linear-gradient(135deg, #C0272D22, #8B1A1E55);
+      background-color: #f0e0e0;
+    }
+
+    .g2 {
+      background: linear-gradient(135deg, #1E3A5F22, #2D5A8E55);
+      background-color: #dde8f0;
+    }
+
+    .g3 {
+      background: linear-gradient(135deg, #1A3D1C22, #2D6B3055);
+      background-color: #ddf0de;
+    }
+
+    .g4 {
+      background: linear-gradient(135deg, #5C360022, #8B520055);
+      background-color: #f0ead0;
+    }
+
+    .g5 {
+      background: linear-gradient(135deg, #2D1A4A22, #5C358855);
+      background-color: #e8ddf5;
+    }
+
+    .g6 {
+      background: linear-gradient(135deg, #00303022, #00606055);
+      background-color: #d0eded;
+    }
+
+    .g7 {
+      background: linear-gradient(135deg, #4A1A0022, #8B340055);
+      background-color: #f5e0d0;
+    }
+
+    .g8 {
+      background: linear-gradient(135deg, #0A0A2A22, #1A1A5055);
+      background-color: #d0d0f0;
+    }
+
+    /* ── INSTAGRAM ── */
+    #instagram {
+      padding: 120px 0;
+      background: var(--white);
+    }
+
+    .ig-header {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 32px;
+      margin-bottom: 56px;
+    }
+
+    .ig-profile-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .ig-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--red), var(--red-dark));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 0 3px white, 0 0 0 5px var(--red);
+    }
+
+    .ig-avatar span {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 16px;
+      color: white;
+    }
+
+    .ig-handle {
+      font-weight: 700;
+      font-size: 15px;
+      margin-bottom: 3px;
+    }
+
+    .ig-stats {
+      font-size: 13px;
+      color: var(--mid-gray);
+    }
+
+    .ig-stats strong {
+      color: var(--black);
+    }
+
+    .ig-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .ig-post {
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .ig-cta {
+      text-align: center;
+      margin-top: 48px;
+    }
+
+    .btn-outline-dark {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 2px solid var(--black);
+      color: var(--black);
+      padding: 14px 32px;
+      border-radius: 2px;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all var(--transition);
+    }
+
+    .btn-outline-dark:hover {
+      background: var(--black);
+      color: white;
+    }
+
+    /* ── COMMUNITY CTA ── */
+    #community {
+      padding: 120px 0;
+      background: var(--red);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #community::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 80% at 80% 50%, rgba(255, 255, 255, 0.06) 0%, transparent 60%),
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    .community-inner {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .community-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 20px;
+    }
+
+    .community-title {
+      font-family: var(--font-display);
+      font-size: clamp(38px, 5vw, 68px);
+      font-weight: 900;
+      color: white;
+      line-height: 1;
+      letter-spacing: -2px;
+      margin-bottom: 20px;
+    }
+
+    .community-subtitle {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.7);
+      max-width: 520px;
+      margin: 0 auto 48px;
+      line-height: 1.7;
+    }
+
+    .community-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-white {
+      background: white;
+      color: var(--red);
+      padding: 16px 36px;
+      border-radius: 2px;
+      font-weight: 700;
+      font-size: 15px;
+      transition: all var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-white:hover {
+      background: var(--cream);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-ghost-white {
+      background: transparent;
+      color: white;
+      padding: 16px 36px;
+      border-radius: 2px;
+      font-weight: 600;
+      font-size: 15px;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      transition: all var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-ghost-white:hover {
+      border-color: white;
+      transform: translateY(-3px);
+    }
+
+    .community-numbers {
+      display: flex;
+      gap: 60px;
+      justify-content: center;
+      margin-top: 72px;
+      padding-top: 48px;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .comm-num-item {
+      text-align: center;
+    }
+
+    .comm-num {
+      font-family: var(--font-display);
+      font-size: 42px;
+      font-weight: 900;
+      color: white;
+      line-height: 1;
+    }
+
+    .comm-num-label {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.55);
+      margin-top: 6px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--off-black);
+      padding: 60px 0 32px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 60px;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand-name {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 900;
+      color: white;
+      margin-bottom: 14px;
+    }
+
+    .footer-brand-name span {
+      color: var(--red-light);
+    }
+
+    .footer-brand-desc {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.4);
+      line-height: 1.7;
+      max-width: 300px;
+    }
+
+    .footer-col-title {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.35);
+      margin-bottom: 20px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-links a {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.55);
+      transition: color var(--transition);
+    }
+
+    .footer-links a:hover {
+      color: var(--red-light);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-copy {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.25);
+    }
+
+    .footer-ig a {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.35);
+      transition: color var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .footer-ig a:hover {
+      color: var(--red-light);
+    }
+
+    /* ── REVEAL ANIMATIONS ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 {
+      transition-delay: 0.12s;
+    }
+
+    .reveal-delay-2 {
+      transition-delay: 0.24s;
+    }
+
+    .reveal-delay-3 {
+      transition-delay: 0.36s;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav {
+        padding: 0 24px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .nav-hamburger {
+        display: flex;
+      }
+
+      .nav-mobile {
+        position: fixed;
+        top: 68px;
+        left: 0;
+        right: 0;
+        background: var(--black);
+        padding: 32px 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        z-index: 999;
+        transform: translateY(-120%);
+        transition: transform var(--transition);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .nav-mobile.open {
+        transform: translateY(0);
+        display: flex;
+      }
+
+      .nav-mobile a {
+        color: white;
+        font-size: 16px;
+        font-weight: 500;
+        padding: 8px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .hero-content {
+        padding: 60px 24px;
+      }
+
+      .hero-stats {
+        right: 24px;
+        bottom: 32px;
+        gap: 24px;
+      }
+
+      .hero-scroll {
+        display: none;
+      }
+
+      .hero-stat-number {
+        font-size: 26px;
+      }
+
+      .section-inner {
+        padding: 0 24px;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .about-right {
+        order: -1;
+      }
+
+      .about-visual {
+        box-shadow: 12px 12px 0 var(--red);
+        max-width: 400px;
+        margin: 0 auto;
+      }
+
+      .about-badge {
+        bottom: -12px;
+        left: -12px;
+      }
+
+      .events-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+
+      .events-track {
+        grid-template-columns: 1fr;
+      }
+
+      .product-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .ig-header {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .ig-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+
+      .community-numbers {
+        gap: 32px;
+        flex-wrap: wrap;
+      }
+
+      .modal-photos {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .hero-accent {
+        display: none;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero-title {
+        font-size: 44px;
+        letter-spacing: -2px;
+      }
+
+      .hero-stats {
+        position: static;
+        margin-top: 40px;
+        justify-content: flex-start;
+      }
+
+      #hero {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-top: 68px;
+      }
+
+      .hero-content {
+        padding-bottom: 20px;
+      }
+
+      .ig-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .upcoming-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .modal-photos {
+        grid-template-columns: 1fr;
+      }
+
+      .about-pillars {
+        grid-template-columns: 1fr;
+      }
+
+      .community-numbers {
+        gap: 24px;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a href="#" class="nav-logo"><img src="logo-afc.jpg" alt="The After Five Club" style="height: 32px;"></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#events">Events</a></li>
+      <li><a href="#upcoming">Upcoming</a></li>
+      <li><a href="#product">Produk</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#instagram">Instagram</a></li>
+      <li><a href="https://chat.whatsapp.com/Kl0lQBUMycAI1yrsVAekXw?mode=gi_t" target="_blank" class="nav-cta">Gabung
+          Komunitas</a></li>
+    </ul>
+    <div class="nav-hamburger" id="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+  <div class="nav-mobile" id="mobileMenu">
+    <a href="#about" onclick="closeMenu()">About</a>
+    <a href="#events" onclick="closeMenu()">Signature Events</a>
+    <a href="#upcoming" onclick="closeMenu()">Upcoming Events</a>
+    <a href="#product" onclick="closeMenu()">Produk</a>
+    <a href="#gallery" onclick="closeMenu()">Gallery</a>
+    <a href="#instagram" onclick="closeMenu()">Instagram</a>
+    <a href="https://chat.whatsapp.com/Kl0lQBUMycAI1yrsVAekXw?mode=gi_t" target="_blank"
+      style="color: #E8454B !important; font-weight: 700;">Gabung Komunitas ↗</a>
+  </div>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grain"></div>
+    <div class="hero-accent">
+      <div class="hero-accent-img">
+        <div class="hero-img-block"></div>
+        <div class="hero-img-block"></div>
+        <div class="hero-img-block"></div>
+        <div class="hero-img-block"></div>
+        <div class="hero-img-block"></div>
+      </div>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <div class="hero-eyebrow-dot"></div>
+        <span>Based in Malang, ID · Est. 2024</span>
+      </div>
+      <h1 class="hero-title">
+        The<br>
+        <em>After</em><br>
+        Five Club.
+      </h1>
+      <p class="hero-subtitle">
+        Tempat belajar, terhubung, dan bertumbuh bersama. Komunitas untuk perempuan yang ingin hidup lebih bermakna —
+        setelah jam lima.
+      </p>
+      <div class="hero-actions">
+        <a href="#events" class="btn-primary">Lihat Signature Events ↓</a>
+        <a href="https://chat.whatsapp.com/Kl0lQBUMycAI1yrsVAekXw?mode=gi_t" target="_blank" class="btn-ghost">Gabung
+          Komunitas ↗</a>
+      </div>
+      <div class="hero-stats" style="position:relative;bottom:auto;right:auto;margin-top:56px;">
+        <div class="hero-stat-item">
+          <div class="hero-stat-number">775+</div>
+          <div class="hero-stat-label">Followers</div>
+        </div>
+        <div class="hero-stat-item">
+          <div class="hero-stat-number">10+</div>
+          <div class="hero-stat-label">Events</div>
+        </div>
+        <div class="hero-stat-item">
+          <div class="hero-stat-number">100+</div>
+          <div class="hero-stat-label">Anggota Aktif</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-inner">
+      <div class="about-grid">
+        <div class="about-left reveal">
+          <div class="section-badge">Tentang Kami</div>
+          <h2 class="section-title">Bukan Sekadar<br>Komunitas Biasa.</h2>
+          <p class="about-text">
+            The After Five Club adalah ruang aman untuk perempuan yang ingin terus belajar, tumbuh, dan terhubung secara
+            bermakna. Kami percaya bahwa pengembangan diri tidak harus membosankan — setiap pertemuan adalah pengalaman
+            yang memorable.
+          </p>
+          <p class="about-text" style="margin-top: 14px;">
+            Dari workshop yang actionable hingga social experience yang hangat, setiap event TAFC dirancang untuk
+            memberi impact nyata pada kehidupan dan karier para anggotanya.
+          </p>
+          <div class="about-pillars">
+            <div class="pillar-card reveal reveal-delay-1">
+              <div class="pillar-icon">📚</div>
+              <div class="pillar-title">Meaningful Learning</div>
+              <div class="pillar-desc">Belajar hal baru dengan cara yang menyenangkan dan langsung bisa diterapkan.
+              </div>
+            </div>
+            <div class="pillar-card reveal reveal-delay-2">
+              <div class="pillar-icon">🤝</div>
+              <div class="pillar-title">Social Experience</div>
+              <div class="pillar-desc">Koneksi nyata dengan sesama perempuan yang punya semangat yang sama.</div>
+            </div>
+            <div class="pillar-card reveal reveal-delay-1">
+              <div class="pillar-icon">🌱</div>
+              <div class="pillar-title">Space to Grow</div>
+              <div class="pillar-desc">Lingkungan yang supportif untuk terus berkembang tanpa judgment.</div>
+            </div>
+            <div class="pillar-card reveal reveal-delay-2">
+              <div class="pillar-icon">✨</div>
+              <div class="pillar-title">Chasing Dream</div>
+              <div class="pillar-desc">Bersama, kita saling support untuk mewujudkan impian masing-masing.</div>
+            </div>
+          </div>
+        </div>
+        <div class="about-right reveal reveal-delay-2">
+          <div class="about-visual">
+            <div class="about-visual-inner">
+              <div class="about-visual-logo"><img src="logo-afc.jpg" alt="The After Five Club"
+                  style="max-width: 160px; border-radius: 4px;"></div>
+              <blockquote class="about-quote">"Meaningful learning, social experience, space to grow and chasing dream."
+              </blockquote>
+              <div class="about-visual-tags">
+                <span class="about-tag">Circle Experience</span>
+                <span class="about-tag">Skill Swap</span>
+                <span class="about-tag">Workshop</span>
+                <span class="about-tag">Networking</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIGNATURE EVENTS -->
+  <section id="events">
+    <div class="section-inner">
+      <div class="events-header">
+        <div>
+          <div class="section-badge" style="color:var(--red-light)"><span
+              style="background:var(--red-light)"></span>Signature Events</div>
+          <h2 class="section-title light">Event yang Bikin<br><em
+              style="color:var(--red-light);font-style:italic;">Ketagihan.</em></h2>
+        </div>
+        <p class="section-desc light" style="max-width:300px;">Klik kartu event untuk melihat detail, foto, dan
+          testimoni peserta yang pernah hadir.</p>
+      </div>
+
+      <div class="events-scroll-wrapper">
+        <div class="events-track" id="eventsTrack">
+
+          <!-- KARTINI CIRCLE -->
+          <div class="event-card" onclick="openModal('kartini')">
+            <div class="event-card-img">
+              <div class="event-card-img-inner event-bg-1">
+                <div class="event-label-overlay">
+                  <div class="el-icon">🌸</div>
+                  <div class="el-title">Circle Experience</div>
+                </div>
+              </div>
+              <div class="event-card-badge">Signature</div>
+            </div>
+            <div class="event-card-body">
+              <div class="event-card-category">Community · Circle</div>
+              <h3 class="event-card-title">Circle Experience</h3>
+              <p class="event-card-desc">Ruang hangat untuk berbagi, terhubung, dan bertumbuh bersama dalam
+                circle yang penuh empati.</p>
+              <div class="event-card-meta">
+                <span class="event-card-count">200+ peserta</span>
+                <div class="event-card-arrow">→</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SKILL SWAP -->
+          <div class="event-card" onclick="openModal('skillswap')">
+            <div class="event-card-img">
+              <div class="event-card-img-inner event-bg-2">
+                <div class="event-label-overlay">
+                  <div class="el-icon">🔄</div>
+                  <div class="el-title">Skill Swap</div>
+                </div>
+              </div>
+              <div class="event-card-badge">Signature</div>
+            </div>
+            <div class="event-card-body">
+              <div class="event-card-category">Learning · Exchange</div>
+              <h3 class="event-card-title">Skill Swap</h3>
+              <p class="event-card-desc">Tukar skill dengan sesama anggota. Semua orang punya sesuatu yang bisa
+                diajarkan dan dipelajari.</p>
+              <div class="event-card-meta">
+                <span class="event-card-count">150+ peserta</span>
+                <div class="event-card-arrow">→</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- WORKSHOP -->
+          <div class="event-card" onclick="openModal('branding')">
+            <div class="event-card-img">
+              <div class="event-card-img-inner event-bg-3">
+                <div class="event-label-overlay">
+                  <div class="el-icon">🚀</div>
+                  <div class="el-title">Workshop</div>
+                </div>
+              </div>
+              <div class="event-card-badge">Workshop</div>
+            </div>
+            <div class="event-card-body">
+              <div class="event-card-category">Workshop</div>
+              <h3 class="event-card-title">Workshop</h3>
+              <p class="event-card-desc">Sesi intensif dan praktikal untuk membangun skill baru, dari personal branding
+                hingga content creation.</p>
+              <div class="event-card-meta">
+                <span class="event-card-count">120+ peserta</span>
+                <div class="event-card-arrow">→</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EVENT MODALS -->
+  <div class="modal-overlay" id="modal-kartini" onclick="closeModalBg(event, 'modal-kartini')">
+    <div class="modal-box">
+      <div class="modal-close"><button class="modal-close-btn" onclick="closeModal('modal-kartini')">✕</button></div>
+      <div class="modal-hero">
+        <div class="modal-hero-bg event-bg-1">
+          <div class="modal-hero-tag">Signature Event · Community</div>
+          <h2 class="modal-hero-title">Circle Experience</h2>
+        </div>
+      </div>
+      <div class="modal-body">
+        <h3 class="modal-section-title">Tentang Event Ini</h3>
+        <p class="modal-desc">Circle Experience adalah event signature The After Five Club yang menghadirkan
+          ruang hangat bagi perempuan untuk saling berbagi cerita, pengalaman, dan ilmu. Eevent ini mendorong setiap
+          peserta untuk berani bersuara, bertumbuh, dan saling menguatkan satu sama
+          lain dalam lingkungan yang aman dan supportif.<br><br>Setiap sesi dipenuhi dengan sharing session yang
+          mendalam, mini workshop yang actionable, serta sesi networking yang bermakna. Peserta tidak hanya pulang
+          dengan pengetahuan baru, tapi juga koneksi nyata yang lasting.</p>
+        <h3 class="modal-section-title">Foto Event</h3>
+        <div class="modal-photos">
+          <div class="modal-photo">
+            <div class="modal-photo-img event-bg-1"
+              style="display:flex;align-items:center;justify-content:center;font-size:36px;">🌸</div>
+          </div>
+          <div class="modal-photo">
+            <div class="modal-photo-img"
+              style="background:linear-gradient(135deg,#6B1518,#C0272D);display:flex;align-items:center;justify-content:center;font-size:36px;">
+              👩‍👩‍👧</div>
+          </div>
+          <div class="modal-photo">
+            <div class="modal-photo-img"
+              style="background:linear-gradient(135deg,#4A0E10,#8B1A1E);display:flex;align-items:center;justify-content:center;font-size:36px;">
+              💬</div>
+          </div>
+          <div class="modal-photo">
+            <div class="modal-photo-img"
+              style="background:linear-gradient(135deg,#2A0809,#6B1518);display:flex;align-items:center;justify-content:center;font-size:36px;">
+              📸</div>
+          </div>
+          <div class="modal-photo">
+            <div class="modal-photo-img event-bg-1"
+              style="display:flex;align-items:center;justify-content:center;font-size:36px;">🤝</div>
+          </div>
+          <div class="modal-photo">
+            <div class="modal-photo-img"
+              style="background:linear-gradient(135deg,#8B1A1E,#C0272D);display:flex;align-items:center;justify-content:center;font-size:36px;">
+              ✨</div>
+          </div>
+        </div>
+        <h3 class="modal-section-title">Kata Peserta</h3>
+        <div class="modal-testimonials">
+          <div class="testimonial-card">
+            <p class="testimonial-text">"Ini event paling impactful yang pernah aku ikutin. Bukan cuma belajar, tapi aku
+              balik dengan semangat baru dan teman-teman yang genuinely supportive. Highly recommended banget!"</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">AR</div>
+              <div>
+                <div class="testimonial-name">Alya Rahma</div>
+                <div class="testimonial-role">Content Creator · Malang</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <p class="testimonial-text">"Vibes-nya cozy banget, everyone so welcoming. Aku yang biasanya introvert pun
+              bisa nyaman sharing dan akhirnya dapat insight yang nggak terduga. Nggak nyesel hadir!"</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">DS</div>
+              <div>
+                <div class="testimonial-name">Dina Septiani</div>
+                <div class="testimonial-role">Freelancer · Malang</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <p class="testimonial-text">"The After Five Club berhasil bikin komunitas yang beneran terasa seperti
+              keluarga.
+              Circle Experience jadi reminder bahwa kita nggak harus sendirian dalam perjalanan ini."</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">FN</div>
+              <div>
+                <div class="testimonial-name">Fitri Nur</div>
+                <div class="testimonial-role">Entrepreneur · Malang</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-cta">
+          <a href="#upcoming" class="btn-primary" onclick="closeModal('modal-kartini')"
+            style="font-size:15px;padding:16px 36px;">Lihat Event Upcoming ↓</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-skillswap" onclick="closeModalBg(event, 'modal-skillswap')">
+    <div class="modal-box">
+      <div class="modal-close"><button class="modal-close-btn" onclick="closeModal('modal-skillswap')">✕</button></div>
+      <div class="modal-hero">
+        <div class="modal-hero-bg event-bg-2">
+          <div class="modal-hero-tag">Signature Event · Learning</div>
+          <h2 class="modal-hero-title">Skill Swap</h2>
+        </div>
+      </div>
+      <div class="modal-body">
+        <h3 class="modal-section-title">Tentang Event Ini</h3>
+        <p class="modal-desc">Skill Swap adalah format event unik TAFC di mana setiap peserta hadir sebagai murid
+          sekaligus guru. Konsepnya sederhana: semua orang punya skill yang berharga, dan kita tukar satu sama lain
+          dalam suasana yang fun dan non-judgmental.<br><br>Satu sesi bisa mencakup berbagai topik mulai dari desain,
+          memasak, bahasa, keuangan, coding, hingga craft. Format ini mendorong peserta untuk percaya diri dengan
+          kemampuan mereka dan sekaligus belajar hal baru dari peers.</p>
+        <h3 class="modal-section-title">Foto Event</h3>
+        <div class="modal-photos">
+          <div class="modal-photo">
+            <div class="modal-photo-img event-bg-2"
+              style="display:flex;align-items:center;justify-content:center;font-size:36px;">🔄</div>
+          </div>
+          <div class="modal-photo">
+            <div class="modal-photo-img"
+              style="background:linear-gradient(135deg,#1E3A5F,#2D5A8E);display:flex;align-items:center;justify-content:center;font-size:36px;">
+              🎨</div>
+          </div>
+          <div class="modal-photo">
+            <div class="modal-photo-img"
+              style="background:linear-gradient(135deg,#0D1A2D,#1E3A5F);display:flex;align-items:center;justify-content:center;font-size:36px;">
+              💻</div>
+          </div>
+          <div class="modal-photo">
+            <div class="modal-photo-img event-bg-2"
+              style="display:flex;align-items:center;justify-content:center;font-size:36px;">📖</div>
+          </div>
+          <div class="modal-photo">
+            <div class="modal-photo-img"
+              style="background:linear-gradient(135deg,#2D5A8E,#4A7AB0);display:flex;align-items:center;justify-content:center;font-size:36px;">
+              🎤</div>
+          </div>
+          <div class="modal-photo">
+            <div class="modal-photo-img"
+              style="background:linear-gradient(135deg,#1E3A5F,#0D1A2D);display:flex;align-items:center;justify-content:center;font-size:36px;">
+              🌟</div>
+          </div>
+        </div>
+        <h3 class="modal-section-title">Kata Peserta</h3>
+        <div class="modal-testimonials">
+          <div class="testimonial-card">
+            <p class="testimonial-text">"Skill Swap adalah event paling fun yang pernah aku ikutin! Aku ngajarin cara
+              bikin keuangan spreadsheet, dan balik dapat skill desain Canva yang langsung aku pakai besoknya. Win-win
+              banget!"</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">RY</div>
+              <div>
+                <div class="testimonial-name">Rina Yuliana</div>
+                <div class="testimonial-role">Admin & Finance · Malang</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <p class="testimonial-text">"Aku nggak nyangka ilmu yang aku anggap 'biasa' ternyata sangat berharga buat
+              orang lain. Skill Swap bikin aku lebih percaya diri sama skill yang aku punya!"</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">MS</div>
+              <div>
+                <div class="testimonial-name">Maya Sari</div>
+                <div class="testimonial-role">Teacher · Malang</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-branding" onclick="closeModalBg(event, 'modal-branding')">
+    <div class="modal-box">
+      <div class="modal-close"><button class="modal-close-btn" onclick="closeModal('modal-branding')">✕</button></div>
+      <div class="modal-hero">
+        <div class="modal-hero-bg event-bg-3">
+          <div class="modal-hero-tag">Workshop · Branding</div>
+          <h2 class="modal-hero-title">Personal Branding That Opens Doors</h2>
+        </div>
+      </div>
+      <div class="modal-body">
+        <h3 class="modal-section-title">Tentang Event Ini</h3>
+        <p class="modal-desc">Workshop intensif yang dirancang untuk membantu perempuan membangun personal brand yang
+          autentik, konsisten, dan strategis. Bukan sekadar teori — peserta akan langsung praktek mendefinisikan brand
+          identity, crafting bio yang menarik, dan strategi konten yang sesuai dengan tujuan karier
+          mereka.<br><br>Dipandu oleh praktisi dengan pengalaman nyata di bidang personal branding, setiap peserta akan
+          pulang dengan action plan yang konkret dan siap dieksekusi.</p>
+        <h3 class="modal-section-title">Foto Event</h3>
+        <div class="modal-photos">
+          <div class="modal-photo">
+            <div class="modal-photo-img event-bg-3"
+              style="display:flex;align-items:center;justify-content:center;font-size:36px;">🚀</div>
+          </div>
+          <div class="modal-photo">
+            <div class="modal-photo-img"
+              style="background:linear-gradient(135deg,#1A3D1C,#2D6B30);display:flex;align-items:center;justify-content:center;font-size:36px;">
+              💼</div>
+          </div>
+          <div class="modal-photo">
+            <div class="modal-photo-img"
+              style="background:linear-gradient(135deg,#0D2210,#1A3D1C);display:flex;align-items:center;justify-content:center;font-size:36px;">
+              📱</div>
+          </div>
+          <div class="modal-photo">
+            <div class="modal-photo-img event-bg-3"
+              style="display:flex;align-items:center;justify-content:center;font-size:36px;">✍️</div>
+          </div>
+          <div class="modal-photo">
+            <div class="modal-photo-img"
+              style="background:linear-gradient(135deg,#2D6B30,#4A9B4D);display:flex;align-items:center;justify-content:center;font-size:36px;">
+              🎯</div>
+          </div>
+          <div class="modal-photo">
+            <div class="modal-photo-img"
+              style="background:linear-gradient(135deg,#1A3D1C,#0D2210);display:flex;align-items:center;justify-content:center;font-size:36px;">
+              🌿</div>
+          </div>
+        </div>
+        <h3 class="modal-section-title">Kata Peserta</h3>
+        <div class="modal-testimonials">
+          <div class="testimonial-card">
+            <p class="testimonial-text">"Setelah ikut workshop ini, follower LinkedIn aku naik 3x dalam sebulan. Yang
+              lebih penting, aku sekarang lebih percaya diri positioning diri untuk kesempatan-kesempatan baru."</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">NA</div>
+              <div>
+                <div class="testimonial-name">Nadia Aulia</div>
+                <div class="testimonial-role">Marketing Professional · Malang</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <p class="testimonial-text">"Workshop yang padat tapi sangat praktis. Aku dapat clarity tentang apa yang
+              sebenarnya mau aku build dan bagaimana cara ngomunikasinnya ke orang lain."</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">LW</div>
+              <div>
+                <div class="testimonial-name">Lilis Widyawati</div>
+                <div class="testimonial-role">Freelancer · Malang</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-content" onclick="closeModalBg(event, 'modal-content')">
+    <div class="modal-box">
+      <div class="modal-close"><button class="modal-close-btn" onclick="closeModal('modal-content')">✕</button></div>
+      <div class="modal-hero">
+        <div class="modal-hero-bg event-bg-4">
+          <div class="modal-hero-tag">Workshop · Digital</div>
+          <h2 class="modal-hero-title">Content Creation & Monetization</h2>
+        </div>
+      </div>
+      <div class="modal-body">
+        <h3 class="modal-section-title">Tentang Event Ini</h3>
+        <p class="modal-desc">Belajar dari nol hingga menghasilkan income dari konten digital. Workshop ini membahas
+          strategi konten yang terbukti work, cara menemukan niche yang profitable, hingga berbagai model monetisasi
+          yang bisa langsung diterapkan — mulai dari digital product, affiliate, hingga brand
+          collaboration.<br><br>Peserta juga mendapat sesi review konten langsung dari pembicara dan template siap pakai
+          untuk langsung memulai perjalanan kreator digital mereka.</p>
+        <h3 class="modal-section-title">Foto Event</h3>
+        <div class="modal-photos">
+          <div class="modal-photo">
+            <div class="modal-photo-img event-bg-4"
+              style="display:flex;align-items:center;justify-content:center;font-size:36px;">💡</div>
+          </div>
+          <div class="modal-photo">
+            <div class="modal-photo-img"
+              style="background:linear-gradient(135deg,#5C3600,#8B5200);display:flex;align-items:center;justify-content:center;font-size:36px;">
+              📹</div>
+          </div>
+          <div class="modal-photo">
+            <div class="modal-photo-img"
+              style="background:linear-gradient(135deg,#2D1A00,#5C3600);display:flex;align-items:center;justify-content:center;font-size:36px;">
+              💰</div>
+          </div>
+          <div class="modal-photo">
+            <div class="modal-photo-img event-bg-4"
+              style="display:flex;align-items:center;justify-content:center;font-size:36px;">📊</div>
+          </div>
+          <div class="modal-photo">
+            <div class="modal-photo-img"
+              style="background:linear-gradient(135deg,#8B5200,#B06A00);display:flex;align-items:center;justify-content:center;font-size:36px;">
+              🎬</div>
+          </div>
+          <div class="modal-photo">
+            <div class="modal-photo-img"
+              style="background:linear-gradient(135deg,#5C3600,#2D1A00);display:flex;align-items:center;justify-content:center;font-size:36px;">
+              🏆</div>
+          </div>
+        </div>
+        <h3 class="modal-section-title">Kata Peserta</h3>
+        <div class="modal-testimonials">
+          <div class="testimonial-card">
+            <p class="testimonial-text">"Dari workshop ini aku langsung launch digital product pertama aku dalam 2
+              minggu! Pembicaranya sangat detailed dan sabar menjawab semua pertanyaan. Worth every rupiah!"</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">PK</div>
+              <div>
+                <div class="testimonial-name">Putri Kartika</div>
+                <div class="testimonial-role">Konten Kreator · Malang</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <p class="testimonial-text">"Aku udah lama mau mulai bikin konten tapi selalu stuck dan nggak tau mulai dari
+              mana. Workshop ini ngasih framework yang clear dan aku akhirnya mulai posting konsisten!"</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">WH</div>
+              <div>
+                <div class="testimonial-name">Wahyu Handayani</div>
+                <div class="testimonial-role">Ibu Rumah Tangga · Malang</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UPCOMING EVENTS -->
+  <section id="upcoming">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <div class="section-badge">Upcoming Events</div>
+        <h2 class="section-title">Join Event<br>Selanjutnya.</h2>
+        <p class="section-desc">Jangan sampai ketinggalan! Daftar sekarang dan jadilah bagian dari pengalaman yang nggak
+          terlupakan.</p>
+      </div>
+      <div class="upcoming-grid">
+
+        <div class="upcoming-card reveal" style="display: flex; flex-direction: column; height: 100%;">
+          <img src="up-event-1.jpg" alt="Upcoming Event 1"
+            style="width: 100%; display: block; border-bottom: 1px solid var(--warm-gray); flex-grow: 1; object-fit: cover;">
+          <div class="upcoming-body" style="padding: 20px;">
+            <a href="#" class="btn-primary" style="width: 100%; justify-content: center; padding: 14px;">Ikutan Sekarang
+              →</a>
+          </div>
+        </div>
+
+        <div class="upcoming-card reveal reveal-delay-1" style="display: flex; flex-direction: column; height: 100%;">
+          <img src="up-event-2.jpg" alt="Upcoming Event 2"
+            style="width: 100%; display: block; border-bottom: 1px solid var(--warm-gray); flex-grow: 1; object-fit: cover;">
+          <div class="upcoming-body" style="padding: 20px;">
+            <a href="#" class="btn-primary" style="width: 100%; justify-content: center; padding: 14px;">Ikutan Sekarang
+              →</a>
+          </div>
+        </div>
+
+        <div class="upcoming-card reveal reveal-delay-2" style="display: flex; flex-direction: column; height: 100%;">
+          <img src="up-event-3.jpg" alt="Upcoming Event 3"
+            style="width: 100%; display: block; border-bottom: 1px solid var(--warm-gray); flex-grow: 1; object-fit: cover;">
+          <div class="upcoming-body" style="padding: 20px;">
+            <a href="#" class="btn-primary" style="width: 100%; justify-content: center; padding: 14px;">Ikutan Sekarang
+              →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCT -->
+  <section id="product">
+    <div class="section-inner">
+      <div class="product-grid">
+
+        <!-- Visual -->
+        <div class="product-visual reveal">
+          <img src="q-card.jpg" alt="Question Card"
+            style="width: 100%; max-width: 400px; border-radius: 8px; box-shadow: 0 16px 48px rgba(0,0,0,0.4);">
+
+          <!-- Price row -->
+          <div class="product-price-row">
+            <div class="product-price-now">Rp 99.000</div>
+            <div class="product-price-divider"></div>
+            <div class="product-price-old">Rp 200.000</div>
+            <div class="product-price-badge">-51%</div>
+          </div>
+        </div>
+
+        <!-- Info -->
+        <div class="product-info reveal reveal-delay-2">
+          <div class="section-badge" style="color:var(--red-light);">Produk Komunitas</div>
+          <h2 class="product-name">Question<br><em>Card.</em></h2>
+          <p class="product-desc">Set kartu percakapan yang dirancang khusus untuk mempererat koneksi antarmanusia.
+            Perfect untuk ice breaker, gathering, atau sekadar ngobrol lebih bermakna bareng teman.</p>
+          <div class="product-features">
+            <div class="product-feature">
+              <div class="product-feature-icon">✓</div>
+              <div class="product-feature-text">Pertanyaan thought-provoking yang mendorong percakapan yang lebih dalam
+                dan bermakna</div>
+            </div>
+            <div class="product-feature">
+              <div class="product-feature-icon">✓</div>
+              <div class="product-feature-text">Packaging premium kraft box — cocok dijadikan hadiah untuk sahabat</div>
+            </div>
+            <div class="product-feature">
+              <div class="product-feature-icon">✓</div>
+              <div class="product-feature-text">Pre-order · estimasi dikirim dalam 3 hari kerja (7–9 Mei)</div>
+            </div>
+            <div class="product-feature">
+              <div class="product-feature-icon">✓</div>
+              <div class="product-feature-text">Stok sangat terbatas — hanya 50 pcs per batch</div>
+            </div>
+          </div>
+          <a href="https://shopee.co.id/Question-Card-The-After-Five-Club-i.1741132078.49355743467" target="_blank"
+            class="btn-primary" style="font-size:15px;padding:16px 32px;">
+            Beli di Shopee ↗
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="gallery-header section-inner reveal">
+      <div class="section-badge">Gallery</div>
+      <h2 class="section-title">Momen-momen<br><em style="color:var(--red);font-style:italic;">Berkesan.</em></h2>
+      <p class="section-desc">Setiap event The After Five Club menciptakan kenangan yang nggak terlupakan. Ini sebagian
+        momen yang kami
+        abadikan bersama.</p>
+    </div>
+    <div class="gallery-strip-wrapper">
+      <div class="gallery-strip" id="galleryStrip">
+        <!-- Row 1 -->
+        <div class="gallery-item">
+          <div class="gallery-item-bg g1" style="font-size:52px;">🌸</div>
+          <div class="gallery-overlay"><span class="gallery-overlay-icon">⊕</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-item-bg g2" style="font-size:52px;">👩‍💻</div>
+          <div class="gallery-overlay"><span class="gallery-overlay-icon">⊕</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-item-bg g3" style="font-size:52px;">🤝</div>
+          <div class="gallery-overlay"><span class="gallery-overlay-icon">⊕</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-item-bg g4" style="font-size:52px;">🎤</div>
+          <div class="gallery-overlay"><span class="gallery-overlay-icon">⊕</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-item-bg g5" style="font-size:52px;">📚</div>
+          <div class="gallery-overlay"><span class="gallery-overlay-icon">⊕</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-item-bg g6" style="font-size:52px;">☕</div>
+          <div class="gallery-overlay"><span class="gallery-overlay-icon">⊕</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-item-bg g7" style="font-size:52px;">🎨</div>
+          <div class="gallery-overlay"><span class="gallery-overlay-icon">⊕</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-item-bg g8" style="font-size:52px;">💐</div>
+          <div class="gallery-overlay"><span class="gallery-overlay-icon">⊕</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-item-bg g1" style="font-size:52px;">🏆</div>
+          <div class="gallery-overlay"><span class="gallery-overlay-icon">⊕</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-item-bg g3" style="font-size:52px;">🎯</div>
+          <div class="gallery-overlay"><span class="gallery-overlay-icon">⊕</span></div>
+        </div>
+        <!-- Duplicated for seamless loop -->
+        <div class="gallery-item">
+          <div class="gallery-item-bg g1" style="font-size:52px;">🌸</div>
+          <div class="gallery-overlay"><span class="gallery-overlay-icon">⊕</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-item-bg g2" style="font-size:52px;">👩‍💻</div>
+          <div class="gallery-overlay"><span class="gallery-overlay-icon">⊕</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-item-bg g3" style="font-size:52px;">🤝</div>
+          <div class="gallery-overlay"><span class="gallery-overlay-icon">⊕</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-item-bg g4" style="font-size:52px;">🎤</div>
+          <div class="gallery-overlay"><span class="gallery-overlay-icon">⊕</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-item-bg g5" style="font-size:52px;">📚</div>
+          <div class="gallery-overlay"><span class="gallery-overlay-icon">⊕</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-item-bg g6" style="font-size:52px;">☕</div>
+          <div class="gallery-overlay"><span class="gallery-overlay-icon">⊕</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-item-bg g7" style="font-size:52px;">🎨</div>
+          <div class="gallery-overlay"><span class="gallery-overlay-icon">⊕</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-item-bg g8" style="font-size:52px;">💐</div>
+          <div class="gallery-overlay"><span class="gallery-overlay-icon">⊕</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-item-bg g1" style="font-size:52px;">🏆</div>
+          <div class="gallery-overlay"><span class="gallery-overlay-icon">⊕</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-item-bg g3" style="font-size:52px;">🎯</div>
+          <div class="gallery-overlay"><span class="gallery-overlay-icon">⊕</span></div>
+        </div>
+      </div>
+      <div class="gallery-strip" style="margin-top: 16px; animation-direction: reverse; animation-duration: 40s;">
+        <!-- Row 2 -->
+        <div class="gallery-item">
+          <div class="gallery-item-bg g8" style="font-size:52px;">💐</div>
+          <div class="gallery-overlay"><span class="gallery-overlay-icon">⊕</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-item-bg g7" style="font-size:52px;">🎨</div>
+          <div class="gallery-overlay"><span class="gallery-overlay-icon">⊕</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-item-bg g6" style="font-size:52px;">☕</div>
+          <div class="gallery-overlay"><span class="gallery-overlay-icon">⊕</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-item-bg g5" style="font-size:52px;">📚</div>
+          <div class="gallery-overlay"><span class="gallery-overlay-icon">⊕</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-item-bg g4" style="font-size:52px;">🎤</div>
+          <div class="gallery-overlay"><span class="gallery-overlay-icon">⊕</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-item-bg g3" style="font-size:52px;">🤝</div>
+          <div class="gallery-overlay"><span class="gallery-overlay-icon">⊕</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-item-bg g2" style="font-size:52px;">👩‍💻</div>
+          <div class="gallery-overlay"><span class="gallery-overlay-icon">⊕</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-item-bg g1" style="font-size:52px;">🌸</div>
+          <div class="gallery-overlay"><span class="gallery-overlay-icon">⊕</span></div>
+        </div>
+        <!-- Duplicated for seamless loop -->
+        <div class="gallery-item">
+          <div class="gallery-item-bg g8" style="font-size:52px;">💐</div>
+          <div class="gallery-overlay"><span class="gallery-overlay-icon">⊕</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-item-bg g7" style="font-size:52px;">🎨</div>
+          <div class="gallery-overlay"><span class="gallery-overlay-icon">⊕</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-item-bg g6" style="font-size:52px;">☕</div>
+          <div class="gallery-overlay"><span class="gallery-overlay-icon">⊕</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-item-bg g5" style="font-size:52px;">📚</div>
+          <div class="gallery-overlay"><span class="gallery-overlay-icon">⊕</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-item-bg g4" style="font-size:52px;">🎤</div>
+          <div class="gallery-overlay"><span class="gallery-overlay-icon">⊕</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-item-bg g3" style="font-size:52px;">🤝</div>
+          <div class="gallery-overlay"><span class="gallery-overlay-icon">⊕</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-item-bg g2" style="font-size:52px;">👩‍💻</div>
+          <div class="gallery-overlay"><span class="gallery-overlay-icon">⊕</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-item-bg g1" style="font-size:52px;">🌸</div>
+          <div class="gallery-overlay"><span class="gallery-overlay-icon">⊕</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSTAGRAM -->
+  <section id="instagram">
+    <div class="section-inner">
+      <div class="ig-header reveal">
+        <div class="ig-profile-row">
+          <div class="ig-avatar"
+            style="overflow: hidden; background: white; display: flex; align-items: center; justify-content: center;">
+            <img src="logo-afc.jpg" alt="The After Five Club" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+          <div>
+            <div class="ig-handle">@theafterfive.club</div>
+            <div class="ig-stats"><strong>775</strong> followers · 111 posts</div>
+          </div>
+        </div>
+        <div>
+          <div class="section-badge">Instagram</div>
+          <h2 class="section-title">Update Konten Terbaru.</h2>
+        </div>
+        <a href="https://www.instagram.com/theafterfive.club/" target="_blank" class="btn-primary"
+          style="white-space:nowrap; width: fit-content;">Follow di Instagram ↗</a>
+      </div>
+
+      <div class="ig-grid">
+        <div class="ig-post reveal">
+          <blockquote class="instagram-media"
+            data-instgrm-permalink="https://www.instagram.com/p/DXT87q-D4W_/?utm_source=ig_embed&amp;utm_campaign=loading"
+            data-instgrm-version="14"
+            style="background:#FFF;border:0;border-radius:6px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:1px;max-width:540px;min-width:326px;padding:0;width:99.375%;width:calc(100% - 2px);">
+            <div style="padding:16px;"><a
+                href="https://www.instagram.com/p/DXT87q-D4W_/?utm_source=ig_embed&amp;utm_campaign=loading"
+                style="background:#FFFFFF;line-height:0;padding:0;text-align:center;text-decoration:none;width:100%;"
+                target="_blank">
+                <div style="display:flex;flex-direction:row;align-items:center;">
+                  <div
+                    style="background-color:#F4F4F4;border-radius:50%;flex-grow:0;height:40px;margin-right:14px;width:40px;">
+                  </div>
+                  <div style="display:flex;flex-direction:column;flex-grow:1;justify-content:center;">
+                    <div
+                      style="background-color:#F4F4F4;border-radius:4px;flex-grow:0;height:14px;margin-bottom:6px;width:100px;">
+                    </div>
+                    <div style="background-color:#F4F4F4;border-radius:4px;flex-grow:0;height:14px;width:60px;"></div>
+                  </div>
+                </div>
+                <div style="padding:19% 0;"></div>
+              </a>
+              <p
+                style="color:#c9c8cd;font-family:Arial,sans-serif;font-size:14px;line-height:17px;margin-bottom:0;margin-top:8px;overflow:hidden;padding:8px 0 7px;text-align:center;text-overflow:ellipsis;white-space:nowrap;">
+                <a href="https://www.instagram.com/p/DXT87q-D4W_/?utm_source=ig_embed&amp;utm_campaign=loading"
+                  style="color:#c9c8cd;font-family:Arial,sans-serif;font-size:14px;font-style:normal;font-weight:normal;line-height:17px;text-decoration:none;"
+                  target="_blank">A post shared by The After Five Club (@theafterfive.club)</a>
+              </p>
+            </div>
+          </blockquote>
+        </div>
+        <div class="ig-post reveal reveal-delay-1">
+          <blockquote class="instagram-media"
+            data-instgrm-permalink="https://www.instagram.com/p/DWAu83xj_s_/?utm_source=ig_embed&amp;utm_campaign=loading"
+            data-instgrm-version="14"
+            style="background:#FFF;border:0;border-radius:6px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:1px;max-width:540px;min-width:326px;padding:0;width:99.375%;width:calc(100% - 2px);">
+            <div style="padding:16px;"><a
+                href="https://www.instagram.com/p/DWAu83xj_s_/?utm_source=ig_embed&amp;utm_campaign=loading"
+                style="background:#FFFFFF;line-height:0;padding:0;text-align:center;text-decoration:none;width:100%;"
+                target="_blank"></a>
+              <p
+                style="color:#c9c8cd;font-family:Arial,sans-serif;font-size:14px;line-height:17px;margin-bottom:0;margin-top:8px;overflow:hidden;padding:8px 0 7px;text-align:center;text-overflow:ellipsis;white-space:nowrap;">
+                <a href="https://www.instagram.com/p/DWAu83xj_s_/?utm_source=ig_embed&amp;utm_campaign=loading"
+                  style="color:#c9c8cd;font-family:Arial,sans-serif;font-size:14px;font-style:normal;font-weight:normal;line-height:17px;text-decoration:none;"
+                  target="_blank">A post shared by The After Five Club (@theafterfive.club)</a>
+              </p>
+            </div>
+          </blockquote>
+        </div>
+        <div class="ig-post reveal reveal-delay-2">
+          <blockquote class="instagram-media"
+            data-instgrm-permalink="https://www.instagram.com/p/DVLtTgWD0OG/?utm_source=ig_embed&amp;utm_campaign=loading"
+            data-instgrm-version="14"
+            style="background:#FFF;border:0;border-radius:6px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:1px;max-width:540px;min-width:326px;padding:0;width:99.375%;width:calc(100% - 2px);">
+            <div style="padding:16px;"><a
+                href="https://www.instagram.com/p/DVLtTgWD0OG/?utm_source=ig_embed&amp;utm_campaign=loading"
+                style="background:#FFFFFF;line-height:0;padding:0;text-align:center;text-decoration:none;width:100%;"
+                target="_blank"></a>
+              <p
+                style="color:#c9c8cd;font-family:Arial,sans-serif;font-size:14px;line-height:17px;margin-bottom:0;margin-top:8px;overflow:hidden;padding:8px 0 7px;text-align:center;text-overflow:ellipsis;white-space:nowrap;">
+                <a href="https://www.instagram.com/p/DVLtTgWD0OG/?utm_source=ig_embed&amp;utm_campaign=loading"
+                  style="color:#c9c8cd;font-family:Arial,sans-serif;font-size:14px;font-style:normal;font-weight:normal;line-height:17px;text-decoration:none;"
+                  target="_blank">A post shared by The After Five Club (@theafterfive.club)</a>
+              </p>
+            </div>
+          </blockquote>
+        </div>
+        <div class="ig-post reveal">
+          <blockquote class="instagram-media"
+            data-instgrm-permalink="https://www.instagram.com/reel/DXykctrvBTs/?utm_source=ig_embed&amp;utm_campaign=loading"
+            data-instgrm-version="14"
+            style="background:#FFF;border:0;border-radius:6px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:1px;max-width:540px;min-width:326px;padding:0;width:99.375%;width:calc(100% - 2px);">
+            <div style="padding:16px;"><a
+                href="https://www.instagram.com/reel/DXykctrvBTs/?utm_source=ig_embed&amp;utm_campaign=loading"
+                style="background:#FFFFFF;line-height:0;padding:0;text-align:center;text-decoration:none;width:100%;"
+                target="_blank">
+                <div style="display:flex;flex-direction:row;align-items:center;">
+                  <div
+                    style="background-color:#F4F4F4;border-radius:50%;flex-grow:0;height:40px;margin-right:14px;width:40px;">
+                  </div>
+                  <div style="display:flex;flex-direction:column;flex-grow:1;justify-content:center;">
+                    <div
+                      style="background-color:#F4F4F4;border-radius:4px;flex-grow:0;height:14px;margin-bottom:6px;width:100px;">
+                    </div>
+                    <div style="background-color:#F4F4F4;border-radius:4px;flex-grow:0;height:14px;width:60px;"></div>
+                  </div>
+                </div>
+                <div style="padding:19% 0;"></div>
+              </a>
+              <p
+                style="color:#c9c8cd;font-family:Arial,sans-serif;font-size:14px;line-height:17px;margin-bottom:0;margin-top:8px;overflow:hidden;padding:8px 0 7px;text-align:center;text-overflow:ellipsis;white-space:nowrap;">
+                <a href="https://www.instagram.com/reel/DXykctrvBTs/?utm_source=ig_embed&amp;utm_campaign=loading"
+                  style="color:#c9c8cd;font-family:Arial,sans-serif;font-size:14px;font-style:normal;font-weight:normal;line-height:17px;text-decoration:none;"
+                  target="_blank">A post shared by The After Five Club (@theafterfive.club)</a>
+              </p>
+            </div>
+          </blockquote>
+        </div>
+        <div class="ig-post reveal reveal-delay-1">
+          <blockquote class="instagram-media"
+            data-instgrm-permalink="https://www.instagram.com/reel/DVllE-0D5N3/?utm_source=ig_embed&amp;utm_campaign=loading"
+            data-instgrm-version="14"
+            style="background:#FFF;border:0;border-radius:6px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:1px;max-width:540px;min-width:326px;padding:0;width:99.375%;width:calc(100% - 2px);">
+            <div style="padding:16px;"><a
+                href="https://www.instagram.com/reel/DVllE-0D5N3/?utm_source=ig_embed&amp;utm_campaign=loading"
+                style="background:#FFFFFF;line-height:0;padding:0;text-align:center;text-decoration:none;width:100%;"
+                target="_blank"></a>
+              <p
+                style="color:#c9c8cd;font-family:Arial,sans-serif;font-size:14px;line-height:17px;margin-bottom:0;margin-top:8px;overflow:hidden;padding:8px 0 7px;text-align:center;text-overflow:ellipsis;white-space:nowrap;">
+                <a href="https://www.instagram.com/reel/DVllE-0D5N3/?utm_source=ig_embed&amp;utm_campaign=loading"
+                  style="color:#c9c8cd;font-family:Arial,sans-serif;font-size:14px;font-style:normal;font-weight:normal;line-height:17px;text-decoration:none;"
+                  target="_blank">A post shared by The After Five Club (@theafterfive.club)</a>
+              </p>
+            </div>
+          </blockquote>
+        </div>
+        <div class="ig-post reveal reveal-delay-2">
+          <blockquote class="instagram-media"
+            data-instgrm-permalink="https://www.instagram.com/reel/DVBenaqk6uT/?utm_source=ig_embed&amp;utm_campaign=loading"
+            data-instgrm-version="14"
+            style="background:#FFF;border:0;border-radius:6px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:1px;max-width:540px;min-width:326px;padding:0;width:99.375%;width:calc(100% - 2px);">
+            <div style="padding:16px;"><a
+                href="https://www.instagram.com/reel/DVBenaqk6uT/?utm_source=ig_embed&amp;utm_campaign=loading"
+                style="background:#FFFFFF;line-height:0;padding:0;text-align:center;text-decoration:none;width:100%;"
+                target="_blank"></a>
+              <p
+                style="color:#c9c8cd;font-family:Arial,sans-serif;font-size:14px;line-height:17px;margin-bottom:0;margin-top:8px;overflow:hidden;padding:8px 0 7px;text-align:center;text-overflow:ellipsis;white-space:nowrap;">
+                <a href="https://www.instagram.com/reel/DVBenaqk6uT/?utm_source=ig_embed&amp;utm_campaign=loading"
+                  style="color:#c9c8cd;font-family:Arial,sans-serif;font-size:14px;font-style:normal;font-weight:normal;line-height:17px;text-decoration:none;"
+                  target="_blank">A post shared by The After Five Club (@theafterfive.club)</a>
+              </p>
+            </div>
+          </blockquote>
+        </div>
+      </div>
+      <div class="ig-cta reveal">
+        <a href="https://www.instagram.com/theafterfive.club/" target="_blank" class="btn-outline-dark"
+          style="margin-top:8px;">Lihat Semua Konten di Instagram ↗</a>
+      </div>
+    </div>
+    <script async src="https://www.instagram.com/embed.js"></script>
+  </section>
+
+  <!-- COMMUNITY CTA -->
+  <section id="community">
+    <div class="section-inner community-inner">
+      <div class="community-tag reveal">Bergabung Sekarang</div>
+      <h2 class="community-title reveal">Sudah waktunya<br>kamu ikut.</h2>
+      <p class="community-subtitle reveal">Ribuan perempuan sudah menemukan komunitas yang mereka cari di sini. Gratis
+        bergabung, dan mulai perjalanan bertumbuhmu hari ini.</p>
+      <div class="community-actions reveal">
+        <a href="https://chat.whatsapp.com/Kl0lQBUMycAI1yrsVAekXw?mode=gi_t" target="_blank" class="btn-white">
+          <span>💬</span> Join Grup WhatsApp — Gratis!
+        </a>
+        <a href="https://www.instagram.com/theafterfive.club/" target="_blank" class="btn-ghost-white">
+          <span>📸</span> Ikuti di Instagram
+        </a>
+      </div>
+      <div class="community-numbers reveal">
+        <div class="comm-num-item">
+          <div class="comm-num">775+</div>
+          <div class="comm-num-label">Followers</div>
+        </div>
+        <div class="comm-num-item">
+          <div class="comm-num">10+</div>
+          <div class="comm-num-label">Events Digelar</div>
+        </div>
+        <div class="comm-num-item">
+          <div class="comm-num">100+</div>
+          <div class="comm-num-label">Anggota Aktif</div>
+        </div>
+        <div class="comm-num-item">
+          <div class="comm-num">4.9★</div>
+          <div class="comm-num-label">Rating Peserta</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="section-inner">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand-name"><img src="logo-afc.jpg" alt="The After Five Club"
+              style="height: 48px; border-radius: 4px;"></div>
+          <p class="footer-brand-desc">Meaningful learning, social experience, space to grow and chasing dream.
+            Komunitas perempuan berbasis di Malang, Indonesia.</p>
+        </div>
+        <div>
+          <div class="footer-col-title">Navigasi</div>
+          <ul class="footer-links">
+            <li><a href="#about">Tentang Kami</a></li>
+            <li><a href="#events">Signature Events</a></li>
+            <li><a href="#upcoming">Upcoming Events</a></li>
+            <li><a href="#product">Produk</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Kontak</div>
+          <ul class="footer-links">
+            <li><a href="https://www.instagram.com/theafterfive.club/" target="_blank">@theafterfive.club</a></li>
+            <li><a href="https://linktr.ee/theafterfiveclub" target="_blank">Linktree ↗</a></li>
+            <li><a href="https://chat.whatsapp.com/Kl0lQBUMycAI1yrsVAekXw?mode=gi_t" target="_blank">Komunitas
+                WhatsApp</a></li>
+            <li><a href="https://shopee.co.id/Question-Card-The-After-Five-Club-i.1741132078.49355743467"
+                target="_blank">Shopee Store ↗</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-copy">© 2026 The After Five Club · Malang, Indonesia</div>
+        <div class="footer-ig"><a href="https://www.instagram.com/theafterfive.club/" target="_blank"><span>📸</span>
+            @theafterfive.club</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // NAV scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 80);
+    });
+
+    // Mobile menu
+    function toggleMenu() {
+      document.getElementById('mobileMenu').classList.toggle('open');
+    }
+    function closeMenu() {
+      document.getElementById('mobileMenu').classList.remove('open');
+    }
+
+    // Modal
+    function openModal(id) {
+      const overlay = document.getElementById('modal-' + id);
+      overlay.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => { overlay.classList.add('visible'); });
+      });
+    }
+    function closeModal(id) {
+      const overlay = document.getElementById(id);
+      overlay.classList.remove('visible');
+      setTimeout(() => {
+        overlay.style.display = 'none';
+        document.body.style.overflow = '';
+      }, 300);
+    }
+    function closeModalBg(e, id) {
+      if (e.target === e.currentTarget) closeModal(id);
+    }
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay.visible').forEach(el => {
+          closeModal(el.id);
+        });
+      }
+    });
+
+    // Reveal on scroll
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => observer.observe(el));
+
+    // Events drag scroll
+    const track = document.getElementById('eventsTrack');
+    let isDragging = false, startX, scrollLeft;
+    track.addEventListener('mousedown', e => {
+      isDragging = true;
+      track.classList.add('grabbing');
+      startX = e.pageX - track.offsetLeft;
+      scrollLeft = track.scrollLeft;
+    });
+    document.addEventListener('mouseup', () => { isDragging = false; track.classList.remove('grabbing'); });
+    track.addEventListener('mousemove', e => {
+      if (!isDragging) return;
+      e.preventDefault();
+      const x = e.pageX - track.offsetLeft;
+      track.scrollLeft = scrollLeft - (x - startX) * 1.5;
+    });
+    track.addEventListener('click', e => { /* let onclick work on cards */ }, true);
+  </script>
+</body>
+
+</html>
